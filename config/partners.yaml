@@ -1,0 +1,47 @@
+# Healthcare Eligibility Pipeline Configuration
+# This file defines how to process each partner's data
+
+partners:
+  acme_health:
+    partner_code: "ACME"
+    file_path: "data/acme.txt"
+    delimiter: "|"
+    date_format: "%m/%d/%Y"
+    column_mapping:
+      external_id: "MBI"
+      first_name: "FNAME"
+      last_name: "LNAME"
+      dob: "DOB"
+      email: "EMAIL"
+      phone: "PHONE"
+  
+  better_care:
+    partner_code: "BCARE"
+    file_path: "data/bettercare.csv"
+    delimiter: ","
+    date_format: "%Y-%m-%d"
+    column_mapping:
+      external_id: "subscriber_id"
+      first_name: "first_name"
+      last_name: "last_name"
+      dob: "date_of_birth"
+      email: "email"
+      phone: "phone"
+
+# ============================================
+# How to Add a New Partner
+# ============================================
+# Copy the template below and fill in your partner's details:
+#
+# partner_name:
+#   partner_code: "UNIQUE_CODE"
+#   file_path: "data/partner_file.csv"
+#   delimiter: ","
+#   date_format: "%Y-%m-%d"
+#   column_mapping:
+#     external_id: "their_id_column"
+#     first_name: "their_first_name_column"
+#     last_name: "their_last_name_column"
+#     dob: "their_dob_column"
+#     email: "their_email_column"
+#     phone: "their_phone_column"
