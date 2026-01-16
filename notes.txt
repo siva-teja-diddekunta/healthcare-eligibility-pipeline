@@ -1,0 +1,76 @@
+Healthcare Eligibility Pipeline - Development Notes
+===================================================
+
+Started: January 12, 2025
+
+## Approach
+
+Decided to use a config-driven design where partner-specific details live in a YAML file. 
+This way we can add new partners without changing code every time.
+
+## Implementation Progress
+
+[x] Basic pipeline structure
+[x] YAML config setup
+[x] Acme Health processing (pipe-delimited)
+[x] Better Care processing (CSV)
+[x] Data transformations (names, dates, phones, emails)
+[x] Validation logic
+[x] Error handling
+[x] Basic tests
+[x] Documentation
+
+## Issues/Fixes
+
+1. Phone formatting
+   - Initially didn't handle phones that already had dashes
+   - Fixed: strip all non-digits first, then reformat
+   
+2. Date parsing
+   - Acme uses MM/DD/YYYY, BetterCare uses YYYY-MM-DD
+   - Solution: config specifies format, code handles both
+   
+3. BetterCare column names
+   - Their file uses "phone" not "contact_phone"
+   - Updated config to match their actual columns
+
+4. Validation
+   - Decided to be strict on external_id and DOB (required fields)
+   - Log warnings for invalid data but keep processing
+
+## Testing Results
+
+Acme Health:
+- Input: 2 records
+- Output: 2 valid records
+- Transformations look good
+
+Better Care:  
+- Input: 2 records
+- Output: 2 valid records
+- Transformations look good
+
+Combined output: 4 total records ✓
+
+## Tech Choices
+
+- Python + Pandas: Good for this data size, easy to work with
+- YAML for config: More readable than JSON
+- Logging: Helps debug issues
+- Pytest: Quick way to verify transformations work
+
+## Future Ideas
+
+- Could add data quality metrics/reporting
+- Support for Excel files?
+- Automated email notifications on errors
+- Dashboard to track partner data quality
+- Duplicate detection across partners
+
+## Notes
+
+The validation is pretty simple right now, just checks for external_id and valid DOB.
+Could expand this later based on business needs.
+
+Error handling lets one partner fail without breaking the whole pipeline.
+Important for production use.
